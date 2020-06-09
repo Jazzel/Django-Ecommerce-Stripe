@@ -138,6 +138,10 @@ button:hover {
           <p class="card-text">Whatsapp :</p>
           <strong>Note: Screenshot this page to save your order details and after payment send your payment screenshot along this screenshot to confirm your order.</strong>
           <strong>Note: You can also view this order again in your dashboard.</strong>
+          <form action="." method="post" class="float-left">
+                  {% csrf_token %}
+                    <button class="main_btn">Proceed</button>
+              </form>
         </div>
       </div>
       {% endif %}

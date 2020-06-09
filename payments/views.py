@@ -264,7 +264,6 @@ class PaymentView(View):
                 item.save()
 
             ref_code = create_ref_code()
-            print(ref_code)
             order.ordered = True
             order.ref_code = ref_code
             order.save()
