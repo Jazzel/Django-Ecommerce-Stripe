@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django_countries',
     'crispy_forms',
+    'phonenumber_field',
     # ? Authorization
     'allauth',
     'allauth.account',

@@ -12,6 +12,8 @@ from django.urls import reverse_lazy
 import logging
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
+from phonenumber_field.modelfields import PhoneNumberField
+
 
 User = get_user_model()
 # Create your models here.
@@ -45,7 +47,8 @@ class Address(models.Model):
                              on_delete=models.CASCADE)
     street_address = models.CharField(max_length=100)
     apartment_address = models.CharField(max_length=100)
-    country = CountryField(multiple=False)
+    number = PhoneNumberField(blank=True)
+    city = models.CharField(max_length=100,blank=True)
     zip = models.CharField(max_length=100)
     address_type = models.CharField(max_length=1, choices=ADDRESS_CHOICES)
     default = models.BooleanField(default=False)

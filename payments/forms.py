@@ -1,6 +1,8 @@
 from django import forms
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
+from phonenumber_field.formfields import PhoneNumberField
+
 
 PAYMENT_CHOICES = (
     ('O', 'Online - JazzCash or EasyPaisa'),
@@ -10,20 +12,14 @@ PAYMENT_CHOICES = (
 class CheckoutForm(forms.Form):
     shipping_address = forms.CharField(required=False)
     shipping_address2 = forms.CharField(required=False)
-    shipping_country = CountryField(blank_label='(select country)').formfield(
-        required=False,
-        widget=CountrySelectWidget(attrs={
-            'class': 'custom-select d-block w-100',
-        }))
+    shipping_city = forms.CharField(required=False)
+    shipping_number = forms.CharField(required=False)
     shipping_zip = forms.CharField(required=False)
 
     billing_address = forms.CharField(required=False)
     billing_address2 = forms.CharField(required=False)
-    billing_country = CountryField(blank_label='(select country)').formfield(
-        required=False,
-        widget=CountrySelectWidget(attrs={
-            'class': 'custom-select d-block w-100',
-        }))
+    billing_city = forms.CharField(required=False)
+    billing_number = forms.CharField(required=False)
     billing_zip = forms.CharField(required=False)
 
     same_billing_address = forms.BooleanField(required=False)

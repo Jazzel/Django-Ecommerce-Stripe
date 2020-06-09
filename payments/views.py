@@ -14,6 +14,8 @@ from django.contrib import messages
 from accounts.models import UserProfile
 from .models import Payment
 from django.http import Http404
+from items.models import Label,AccessaryLabel   
+
 # Create your views here.
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -48,7 +50,11 @@ class CheckoutView(View):
                 'form': form,
                 'couponform': CouponForm(),
                 'order': order,
-                'DISPLAY_COUPON_FORM': False
+                'DISPLAY_COUPON_FORM': False,
+                'acc_labels': AccessaryLabel.objects.all(),
+                'men_links' : Label.objects.filter(categories__name='Men'),
+                'women_links' : Label.objects.filter(categories__name='Women'),
+                'kids_links' : Label.objects.filter(categories__name='Kids'),
             }
 
             shipping_address_qs = Address.objects.filter(
@@ -79,7 +85,6 @@ class CheckoutView(View):
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
             if form.is_valid():
-
                 use_default_shipping = form.cleaned_data.get(
                     'use_default_shipping')
                 if use_default_shipping:
@@ -98,21 +103,25 @@ class CheckoutView(View):
                             self.request, "No default shipping address available")
                         return redirect('payments:checkout')
                 else:
-                    print("User is entering a new shipping address")
                     shipping_address1 = form.cleaned_data.get(
                         'shipping_address')
                     shipping_address2 = form.cleaned_data.get(
                         'shipping_address2')
-                    shipping_country = form.cleaned_data.get(
-                        'shipping_country')
+                    shipping_number = form.cleaned_data.get(
+                        'shipping_number')
+                    shipping_city = form.cleaned_data.get(
+                        'shipping_city')
                     shipping_zip = form.cleaned_data.get('shipping_zip')
 
-                    if is_valid_form([shipping_address1, shipping_country, shipping_zip]):
+                    if is_valid_form([shipping_address1, shipping_number,shipping_city, shipping_zip]):
+                        print('shipping-valid')
+
                         shipping_address = Address(
                             user=self.request.user,
                             street_address=shipping_address1,
                             apartment_address=shipping_address2,
-                            country=shipping_country,
+                            number=shipping_number,
+                            city=shipping_city,
                             zip=shipping_zip,
                             address_type='S'
                         )
@@ -166,16 +175,20 @@ class CheckoutView(View):
                         'billing_address')
                     billing_address2 = form.cleaned_data.get(
                         'billing_address2')
-                    billing_country = form.cleaned_data.get(
-                        'billing_country')
+                    billing_number = form.cleaned_data.get(
+                        'billing_number')
+                    billing_city = form.cleaned_data.get(
+                        'billing_city')
                     billing_zip = form.cleaned_data.get('billing_zip')
 
-                    if is_valid_form([billing_address1, billing_country, billing_zip]):
+                    if is_valid_form([billing_address1, billing_number,billing_city, billing_zip]):
+                        print('billing-valid')
                         billing_address = Address(
                             user=self.request.user,
                             street_address=billing_address1,
                             apartment_address=billing_address2,
-                            country=billing_country,
+                            city=billing_city,
+                            number=billing_number,
                             zip=billing_zip,
                             address_type='B'
                         )
@@ -219,6 +232,11 @@ class PaymentView(View):
                     'order': order,
                     'DISPLAY_COUPON_FORM': False,
                     'payment_option' : 'Online - JazzCash or EasyPaisa',
+                    'acc_labels': AccessaryLabel.objects.all(),
+                    'men_links' : Label.objects.filter(categories__name='Men'),
+                    'women_links' : Label.objects.filter(categories__name='Women'),
+                    'kids_links' : Label.objects.filter(categories__name='Kids'),
+                        
                  }
                 messages.warning(
                     self.request, "Waiting for order confirmation. Please read the note in online payment section.")
@@ -227,7 +245,11 @@ class PaymentView(View):
                 context = {
                     'order': order,
                     'DISPLAY_COUPON_FORM': False,
-                    'payment_option' : 'Cash on Delivery'
+                    'payment_option' : 'Cash on Delivery',
+                     'acc_labels': AccessaryLabel.objects.all(),
+                    'men_links' : Label.objects.filter(categories__name='Men'),
+                    'women_links' : Label.objects.filter(categories__name='Women'),
+                    'kids_links' : Label.objects.filter(categories__name='Kids'),
                 }
             else:
                 raise Http404("Payment method does not exist")

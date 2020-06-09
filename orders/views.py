@@ -9,6 +9,7 @@ from django.utils import timezone
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
+from items.models import Label,AccessaryLabel   
 
 
 # Create your views here.
@@ -18,7 +19,11 @@ class OrderSummaryView(LoginRequiredMixin, View):
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
             context = {
-                'object': order
+                'object': order,
+                'acc_labels': AccessaryLabel.objects.all(),
+                'men_links' : Label.objects.filter(categories__name='Men'),
+                'women_links' : Label.objects.filter(categories__name='Women'),
+                'kids_links' : Label.objects.filter(categories__name='Kids'),
             }
             return render(self.request, 'order_summary.html', context)
         except ObjectDoesNotExist:

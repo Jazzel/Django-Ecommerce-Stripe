@@ -113,4 +113,12 @@ class OrdersView(ListView,LoginRequiredMixin):
     def get_queryset(self):
         queryset = Order.objects.filter(user=self.request.user).order_by("-start_date")
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(OrdersView, self).get_context_data(**kwargs)
+        context['men_links'] = Label.objects.filter(categories__name='Men')
+        context['women_links'] = Label.objects.filter(categories__name='Women')
+        context['kids_links'] = Label.objects.filter(categories__name='Kids')
+        context['acc_labels']= AccessaryLabel.objects.all()
+        return context
     

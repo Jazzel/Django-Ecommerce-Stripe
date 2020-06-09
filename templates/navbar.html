@@ -51,12 +51,13 @@
                 </ul>
               </li>
               <li class="nav-item submenu dropdown">
-                <a href="{% url 'category' category='Kids' %}" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                   aria-expanded="false">Kids</a>
                 <ul class="dropdown-menu">
                   {% for kids_link in kids_links %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'category' category='Kids' label=kids_link %}">{{kids_link}}</a></li>
                   {% endfor %}
+
                 </ul>
               </li>
               <li class="nav-item submenu dropdown">
@@ -91,3 +92,5 @@
       </nav>
     </div>
   </header>
+
+    

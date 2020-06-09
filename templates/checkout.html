@@ -16,6 +16,9 @@
 
   <main >
     <div class="container wow fadeIn">
+      <p class='jumbotron mt-4'>
+        SHIPPING POLICY Free Shipping in Pakistan for all orders. The customer will usually get an order in 3-5 business days after the order has shipped out. Our Customer Support Representative will call you for Order Conﬁrmation. After your order Conﬁrmation, it can take up to 24 Hours for us to process your order and ship it this is just an estimate and does not include weekends and holidays. We do not ship To P.O Boxes. Delivery can take longer in remote areas in Pakistan. RETURN & EXCHANGE POLICY All products purchased from www. Lafooterwears.pk can be exchanged within 7 days only it 1. The item(s) is faulty, damaged or defective at the time of delivery. 2. The item(s) does not match the original speciﬁcations of the product or is found to be not the same as you had actually purchased.
+      </p>
       <h2 class="my-5 h2 text-center"></h2>
       <div class="row">
         <div class="col-md-8 mb-4">
@@ -38,11 +41,18 @@
                 </div>
 
                 <div class="row mb-3">
-                  <div class="col-lg-4 col-md-12">
-                    <label for="country">Country</label>
-                    {{ form.shipping_country }}
+                  <div class="col-lg-4 col-md-12 mb-3">
+                    <label for="number">Phone Number</label>
+                  <input type='text' placeholder='Phone Number' id='shipping_number' name='shipping_number' class='form-control' />
                     <div class="invalid-feedback">
-                      Please select a valid country.
+                      Phone Number required.
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-12 mb-3">
+                    <label for="number">City</label>
+                  <input type='text' placeholder='City' id='shipping_city' name='shipping_city' class='form-control' />
+                    <div class="invalid-feedback">
+                      City required.
                     </div>
                   </div>
                   <div class="col-lg-4 col-md-6">
@@ -90,10 +100,17 @@
 
                 <div class="row">
                   <div class="col-lg-4 col-md-12 mb-3">
-                    <label for="country">Country</label>
-                    {{ form.billing_country }}
+                    <label for="number">Phone Number</label>
+                  <input type='text' placeholder='Phone Number' id='billing_number' name='billing_number' class='form-control' />
                     <div class="invalid-feedback">
-                      Please select a valid country.
+                      Phone Number required.
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-12 mb-3">
+                    <label for="number">City</label>
+                  <input type='text' placeholder='City' id='billing_city' name='billing_city' class='form-control' />
+                    <div class="invalid-feedback">
+                      City required.
                     </div>
                   </div>
 
