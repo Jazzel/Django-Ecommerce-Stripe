@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+   <section class="home_banner_area">
+    <div class="banner_inner d-flex align-items-center">
+      <div class="container">
+        <div class="banner_content row">
+          <div class="col-lg-5">
+            <h3>All Classic Footwear <br />Collections!</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+          </div>
+          <div class="col-lg-7">
+            <div class="halemet_img">
+              <img src="{% static 'img/banner/helmat.png' %}" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+<section class="feature_product_area latest_product_area">
+    <div class="main_box">
+      <div class="container">
+        <div class="feature_product_inner">
+          <div class="main_title">
+          
+
+            <h2>New Arrivals</h2>
+            <p>Who are in extremely love with eco friendly system.</p>
+          </div>
+          <div class="latest_product_inner row">
+          {% for item in object_list %}
+            <div class="col-lg-3 col-md-4 col-sm-6">
+              <div class="f_p_item">
+                <div class="f_p_img">
+                  <img class="img-fluid" height='100%' src="{{ item.image.url }}" alt="">
+                 
+                </div>
+                <a href="{{ item.get_absolute_url }}">
+                  <h4> {{ item.title }}</h4>
+                </a>
+                <h5>
+                <strong>Rs. 
+                  {% if item.discount_price %}
+                  {{ item.discount_price }}
+                  {% else %}
+                  {{ item.price }}
+                  {% endif %}
+                  </strong>
+                  </h5>
+              </div>
+            </div>
+          {% endfor %}
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+   <section class="clients_logo_area feature_product_area latest_product_area">
+    <div class="main_box">
+      <div class="container">
+        <div class="feature_product_inner">
+          <div class="main_title">
+            <h2>Hot Sales</h2>
+            <p>Best shoes available at reasonable prices.</p>
+          </div>
+          <div class="latest_product_inner row">
+          {% for sale in sales %}
+           <div class="col-lg-3 col-md-4 col-sm-6">
+              <div class="f_p_item">
+                <div class="f_p_img">
+                  <img class="img-fluid" height='100%' src="{{ sale.item.image.url }}" alt="">
+                 
+                </div>
+                <a href="{{ sale.item.get_absolute_url }}">
+                  <h4> {{ sale.item.title }}</h4>
+                </a>
+                <h5>
+                <strong>Rs. 
+                  {% if sale.item.discount_price %}
+                  {{ sale.item.discount_price }}
+                  {% else %}
+                  {{ sale.item.price }}
+                  {% endif %}
+                  </strong>
+                  </h5>
+              </div>
+            </div>
+          {% endfor %}
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+{% endblock content %}
+
+

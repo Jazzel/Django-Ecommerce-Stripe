@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+  <section class="banner_area">
+    <div class="banner_inner d-flex align-items-center">
+      <div class="container">
+        <div class="banner_content text-center">
+          <h2>Contact Us</h2>
+          <div class="page_link">
+            <a href="index.html">Home</a>
+            <a href="contact.html">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ <div class="container mt-2">
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {% endfor %}
+    {% endif %}
+    </div>
+
+  <section class="contact_area p_120">
+    <div class="container"> 
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="contact_info">
+            <div class="info_item">
+              <i class="lnr lnr-home"></i>
+              <h6>California, United States</h6>
+              <p>Santa monica bullevard</p>
+            </div>
+            <div class="info_item">
+              <i class="lnr lnr-phone-handset"></i>
+              <h6><a href="#">00 (440) 9865 562</a></h6>
+              <p>Mon to Fri 9am to 6 pm</p>
+            </div>
+            <div class="info_item">
+              <i class="lnr lnr-envelope"></i>
+              <h6><a href="#"><span class="__cf_email__"
+                    data-cfemail="ddaea8adadb2afa99dbeb2b1b2afb1b4bff3beb2b0">[email&#160;protected]</span></a></h6>
+              <p>Send us your query anytime!</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-9">
+          <form class="row contact_form" action="{% if action_url %}{{ action_url }}{% endif %}"
+            method="POST" {% if form_id %} id='{{ form_id }}' {% endif %} novalidate="novalidate">
+            {% csrf_token %}
+            <div class="col-md-6">
+            <div id="div_id_name" class="form-group"> 
+                <input type="text" class="form-control" id="id_name" name="name" placeholder="Enter your name">
+              </div>
+              <div id="div_id_email" class="form-group">
+                <input type="email" class="form-control" id="id_email" name="email" placeholder="Enter email address">
+              </div>
+              <div id="div_id_subject" class="form-group">
+                <input type="text" class="form-control" id="id_subject" name="subject" placeholder="Enter Subject">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div id="div_id_message" class="form-group">
+                <textarea class="form-control" name="message" id="id_message" rows="1"
+                  placeholder="Enter Message"></textarea>
+              </div>
+            </div>
+            <div class="col-md-12 text-right">
+              <button type="submit" value="submit" class="btn submit_btn">Send Message</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}
+

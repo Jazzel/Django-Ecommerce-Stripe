@@ -1,0 +1,128 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block graph %}
+<div class="panel-header panel-header-sm">
+</div>
+{% endblock graph %}
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-11">
+                        <h2 style="font-family: Pacifico;" class="m-2">{{head}} > {{sub_head}}</h2>
+                    </div>
+                </div>
+                <hr>
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h4>Basic Details</h4>
+                        <div class="mt-0 pt-0">
+                            <hr class="bg-white" />
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <ul>
+                                    <li>First Name:</li>
+                                    <p>{{object.first_name}}</p>
+                                </ul>
+                            </div>
+                            <div class="col">
+                                <ul>
+                                    <li>Last Name:</li>
+                                    <p>{{object.last_name}}</p>
+                                </ul>
+                            </div>
+                        </div>
+                        <h4>Account Details</h4>
+                        <div class="mt-0 pt-0">
+                            <hr class="bg-white" />
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <ul>
+                                    <li>Username:</li>
+                                    <p>{{object.username}}</p>
+                                </ul>
+                                <ul>
+                                    <li>Email address:</li>
+                                    <p>{{object.email}}</p>
+                                </ul>
+                            </div>
+                            <div class="col">
+
+                            </div>
+                        </div>
+                        <h4>Bio</h4>
+                        <div class="mt-0 pt-0">
+                            <hr class="bg-white" />
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                {% if object.profile.bio %}
+                                <p>{{object.date_joined}}</p>
+                                {% else %}
+                                <p>No bio available</p>
+                                {% endif %}
+                            </div>
+                            <div class="col">
+
+                            </div>
+                        </div>
+                        <h4 class="mt-2">Other</h4>
+                        <div class="mt-0 pt-0">
+                            <hr class="bg-white" />
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <ul>
+                                    <li>Joined On</li>
+                                    <p>{{object.date_joined}}</p>
+                                </ul>
+                            </div>
+                            <div class="col">
+                                <ul>
+                                    <li>Member Since</li>
+                                    <p>{{object.date_joined|timesince}}</p>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if user.is_superuser %}
+                <p><a href="{% url 'account:users' %}" class="text-primary texts">Back to List</a></p>
+
+                {% endif %}
+
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card  shadow-lg card-user">
+            <div class="image">
+                <img src="{% static 'assets/img/bg5.jpg' %}" alt="...">
+            </div>
+            <div class="card-body">
+                <div class="author">
+                    <a class="text-primary">
+                        <img class="avatar border-gray" src="/media/{{request.user.profile.image}}" alt="...">
+                        <h5 class="title h1">{{user.first_name}} {{user.last_name}}</h5>
+                    </a>
+                    <p class="description">
+                        Username: {{user.username}}<br>{{user.email}}
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <div class="button-container">
+                <div class="container p-3">
+                    {{user.profile.social}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

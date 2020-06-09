@@ -1,0 +1,31 @@
+{% include 'base/stylesheets.html' %}
+{% load static %}
+{% block body %}
+
+
+<body
+    style="background-image: url('{% static 'static/images/bg-01.jpg' %}');background-attachment: fixed;background-size:cover;">
+
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h1 class="styled-font">New here ? Sign Up Here</h1>
+                <form {% if form_id %} id='{{ form_id }}' {% endif %}
+                    action="{% if action_url %}{{ action_url }}{% endif %}" class="w-100" method="POST">
+                    {% load crispy_forms_tags %}
+                    {% csrf_token %} {{ form | crispy }}
+                    <p><small>Note: This is not enough information for us. Update your profile now or later
+                            to get better
+                            interaction
+                            with our
+                            website.</small></p>
+                    <input type="submit" value="Register" class="btn btn-lg styled-font mt-1 btn-dark w-100">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <br />
+</body>
+
+{% endblock body %}

@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="banner_area">
+    <div class="banner_inner d-flex align-items-center">
+      <div class="container">
+        <div class="banner_content text-center">
+          <h2>My Orders</h2>
+        </div>
+      </div>
+    </div>
+  </section>
+<br>
+    
+
+<section class="cart_area">
+    <div class="container">
+      {% for order in object_list %}
+      <div class="card mt-2">
+          <div class="card-body">
+              <h4 class="card-title">Order Details</h4>
+              <p class="card-text">Order ID: {{order.id}}</p>
+              <p class="card-text">Reference Code: {{order.ref_code}}</p>
+              <p class="card-text">Amount: {{order.get_total}}</p>
+              <p class="card-text">Status:
+               {% if order.received %}
+                Received
+                {% else %}
+                Ordered
+               {% endif %}
+              </p>
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-responsive">
+            <thead>
+              <tr>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+        {% for order_item in order.items.all %}
+
+              <tr>
+                <td>
+                  <div class="media">
+                    <div class="d-flex">
+                      <img src="{{order_item.item.image.url}}" width='100px' alt="">
+                    </div>
+                    <div class="media-body ml-2">
+                      <p>{{ order_item.item.title }}</p>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <h5>Rs. {{ order_item.item.price }}</h5>
+                </td>
+                <td>
+                  <div class="product_count">
+
+                {{ order_item.quantity }}
+                  </div>
+            
+                </td>
+                <td>
+            {% if order_item.item.discount_price %}
+                Rs. {{ order_item.get_total_discount_item_price }}
+                <span class="badge badge-primary">Saving Rs. {{ order_item.get_amount_saved }}</span>
+            {% else %}
+                Rs. {{ order_item.get_total_item_price }}
+            {% endif %}
+           
+           
+              </tr>
+             
+        {% endfor %}
+        {% if object.get_total %}
+        <tr>
+            <td colspan="4"><b>Order Total</b></td>
+            <td><b>Rs. {{ object.get_total }}</b></td>
+        </tr>
+        {% endif %}
+              
+            </tbody>
+          </table>
+                    </div>
+                </div>
+              <p class="card-text">Date: {{order.start_date}}</p>
+
+          </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+
+ 
+{% endblock content %}
+
+

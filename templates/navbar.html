@@ -1,0 +1,93 @@
+{% load cart_template_tags %}
+{% load static %}
+
+
+ <header class="header_area">
+    <div class="top_menu row m0">
+      <div class="container">
+        <div class="float-left">
+          <span class="font-weight-bold"><i class="fa fa-whatsapp"></i></span>
+          <a class="font-weight-bold">0333-3434343</a>
+        </div>
+        <div class="float-right">
+          <ul class="header_social">
+            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main_menu">
+      <nav class="navbar navbar-expand-lg navbar-light main_box" style='z-index:999'>
+        <div class="container">
+
+          <a class="navbar-brand logo_h" href="{% url 'home' %}"><img src="{% static 'img/logo.png' %}" alt=""></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+
+          <div class="collapse navbar-collapse offset" id="navbarSupportedContent" style='z-index:999'>
+            <ul class="nav navbar-nav menu_nav ml-auto">
+              <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+              <li class="nav-item submenu dropdown">
+                <a href="{% url 'category' category='Men' %}" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                  aria-expanded="false">Men</a>
+                <ul class="dropdown-menu">
+                  {% for men_link in men_links %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'category' category='Men' label=men_link %}">{{men_link}}</a></li>
+                  {% endfor %}
+                </ul>
+              </li>
+              <li class="nav-item submenu dropdown">
+                <a href="{% url 'category' category='Women' %}" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                  aria-expanded="false">Women</a>
+                <ul class="dropdown-menu">
+                  {% for women_link in women_links %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'category' category='Women' label=women_link %}">{{women_link}}</a></li>
+                  {% endfor %}
+                </ul>
+              </li>
+              <li class="nav-item submenu dropdown">
+                <a href="{% url 'category' category='Kids' %}" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                  aria-expanded="false">Kids</a>
+                <ul class="dropdown-menu">
+                  {% for kids_link in kids_links %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'category' category='Kids' label=kids_link %}">{{kids_link}}</a></li>
+                  {% endfor %}
+                </ul>
+              </li>
+              <li class="nav-item submenu dropdown">
+                  <a href="{% url 'accessories' %}" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                  aria-expanded="false">Accessories</a>
+                <ul class="dropdown-menu">
+                  {% for acc_label in acc_labels %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'accessories' label=acc_label %}">{{acc_label}}</a></li>
+                  {% endfor %}
+                </ul>
+              </li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+
+              {% if user.is_authenticated %}
+              <li class="nav-item"><a class="nav-link" href="{% url 'my-orders' %}">My Orders</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'account_logout' %}">Log Out</a></li>
+
+              {% else %}
+              <li class="nav-item"><a class="nav-link" href="{% url 'account_login' %}">Log In</a></li>
+
+              {% endif %}
+              {% if user.is_superuser %}
+              <li class="nav-item"><a class="nav-link" href="/admin/">Dashboard</a></li>
+              {% endif %}
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li class="nav-item"><a href="{% url 'orders:order-summary' %}" class="cart"><i class="lnr lnr lnr-cart"></i><p class='badge badge-danger'>{{ request.user|cart_item_count }} </p></a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>

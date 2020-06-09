@@ -1,0 +1,7 @@
+Django>=3.0.6
+Pillow>=7.0.0
+django-allauth>=0.41.0
+stripe>=2.48.0
+django-countries>=6.1.2
+django-crispy-forms>=1.9.1
+django-rest-framework>=0.1.0
