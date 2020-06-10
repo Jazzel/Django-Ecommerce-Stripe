@@ -15,7 +15,7 @@ class HomeView(ListView):
     template_name = "home.html"
 
     def get_queryset(self):
-        queryset = Item.objects.all()[:5]
+        queryset = Item.objects.all()[:4]
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -24,7 +24,20 @@ class HomeView(ListView):
         context['men_links'] = Label.objects.filter(categories__name='Men')
         context['women_links'] = Label.objects.filter(categories__name='Women')
         context['kids_links'] = Label.objects.filter(categories__name='Kids')
-        context['sales'] = OrderItem.objects.all()[:5]
+        hot_sales = OrderItem.objects.values_list('item_id', flat=True).distinct()[:4]
+        item_objects=[]
+        for item_id in hot_sales:
+            item = Item.objects.get(id=item_id)
+            item_object = {
+                "title":item.title,
+                "price":item.price,
+                "discount_price":item.discount_price,
+                "image":item.image.url,
+                "get_absolute_url":item.get_absolute_url,
+            }
+            item_objects.append(item_object)
+        context['sales'] = item_objects
+
         context['acc_labels']= AccessaryLabel.objects.all()
 
         return context
@@ -56,6 +69,19 @@ class ItemsCategoryView(ListView):
             else:
                     queryset = Item.objects.filter(categories__name=category,accessory=False)
 
+        hot_sales = OrderItem.objects.values_list('item_id', flat=True).distinct()[:4]
+        item_objects=[]
+        for item_id in hot_sales:
+            item = Item.objects.get(id=item_id)
+            item_object = {
+                "title":item.title,
+                "price":item.price,
+                "discount_price":item.discount_price,
+                "image":item.image.url,
+                "get_absolute_url":item.get_absolute_url,
+            }
+            item_objects.append(item_object)
+
         context = {
             'category':category,
             'colors' : Colour.objects.all(),
@@ -64,7 +90,7 @@ class ItemsCategoryView(ListView):
             'men_links' : Label.objects.filter(categories__name='Men'),
             'women_links' : Label.objects.filter(categories__name='Women'),
             'kids_links' : Label.objects.filter(categories__name='Kids'),
-            'sales' : OrderItem.objects.all()[:5],
+            'sales': item_objects,
             'object_list':queryset,
             'size':size,
             'color':color,
@@ -88,6 +114,18 @@ class AccCategoryView(ListView):
         except:
             queryset = Item.objects.filter(accessory=True)
 
+        hot_sales = OrderItem.objects.values_list('item_id', flat=True).distinct()[:4]
+        item_objects=[]
+        for item_id in hot_sales:
+            item = Item.objects.get(id=item_id)
+            item_object = {
+                "title":item.title,
+                "price":item.price,
+                "discount_price":item.discount_price,
+                "image":item.image.url,
+                "get_absolute_url":item.get_absolute_url,
+            }
+            item_objects.append(item_object)
         context = {
             'colors' : Colour.objects.all(),
             'sizes' : Size.objects.all(),
@@ -95,7 +133,7 @@ class AccCategoryView(ListView):
             'men_links' : Label.objects.filter(categories__name='Men'),
             'women_links' : Label.objects.filter(categories__name='Women'),
             'kids_links' : Label.objects.filter(categories__name='Kids'),
-            'sales' : OrderItem.objects.all()[:5],
+            'sales' : item_objects,
             'object_list':queryset,
             'label':label
         }

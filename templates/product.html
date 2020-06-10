@@ -35,7 +35,8 @@
         </div>
         <div class="col-lg-5 offset-lg-1">
           <div class="s_product_text">
-            <h3>{{ object.title }}</h3>
+            <h3>Title: {{ object.title }}</h3>
+            {% if object.product_code %}<h3>Code: {{ object.product_code }}</h3>{% endif %}
             <h2>{% if object.discount_price %}
             <span class="mr-1">
               <del>Rs. {{ object.price }}</del>

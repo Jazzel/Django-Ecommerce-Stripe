@@ -75,18 +75,18 @@
            <div class="col-lg-3 col-md-4 col-sm-6">
               <div class="f_p_item">
                 <div class="f_p_img">
-                  <img class="img-fluid" height='100%' src="{{ sale.item.image.url }}" alt="">
+                  <img class="img-fluid" height='100%' src="{{ sale.image }}" alt="">
                  
                 </div>
-                <a href="{{ sale.item.get_absolute_url }}">
-                  <h4> {{ sale.item.title }}</h4>
+                <a href="{{ sale.get_absolute_url }}">
+                  <h4> {{ sale.title }}</h4>
                 </a>
                 <h5>
                 <strong>Rs. 
-                  {% if sale.item.discount_price %}
-                  {{ sale.item.discount_price }}
+                  {% if sale.discount_price %}
+                  {{ sale.discount_price }}
                   {% else %}
-                  {{ sale.item.price }}
+                  {{ sale.price }}
                   {% endif %}
                   </strong>
                   </h5>

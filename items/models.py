@@ -75,6 +75,7 @@ class Item(models.Model):
     categories = models.ManyToManyField(Category)
     label = models.ManyToManyField(Label, blank=True)
     accessory_label = models.ManyToManyField(AccessaryLabel, blank=True)
+    product_code= models.CharField(max_length=100, blank=True, null=True)
     slug = models.SlugField(blank=True)
     description = models.TextField()
     colors = models.ManyToManyField(Colour, blank=True)
