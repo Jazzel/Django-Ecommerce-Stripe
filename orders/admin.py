@@ -28,13 +28,26 @@ class OrderAdmin(admin.ModelAdmin):
                     'received',
                     'refund_requested',
                     'refund_granted',
-                    'shipping_address',
-                    'billing_address',
+                    'address_shipping',
+                    'address_billing',
                     ]
+
+    def address_shipping(self,obj):
+        if obj.shipping_address:
+            return "Address 1: {}.\nAddress 2: {}.".format(obj.shipping_address.street_address,obj.shipping_address.apartment_address or None)
+
+        else: 
+            return "Haven't provided one yet"
+
+    def address_billing(self,obj):
+        if obj.billing_address:
+            return "Address 1: {}.\nAddress 2: {}.".format(obj.billing_address.street_address,obj.billing_address.apartment_address or None)
+        else: 
+            return "Haven't provided one yet"
+
+
     list_display_links = [
         'user',
-        'shipping_address',
-        'billing_address',
     ]
     list_filter = ['ordered',
                    'being_delivered',
