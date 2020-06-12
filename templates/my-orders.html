@@ -25,6 +25,8 @@
               <p class="card-text">Status:
                {% if order.received %}
                 Received
+                {% elif order.being_delivered %}
+                Delivering
                 {% else %}
                 Ordered
                {% endif %}
