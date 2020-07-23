@@ -31,7 +31,6 @@
 
           <div class="collapse navbar-collapse offset" id="navbarSupportedContent" style='z-index:999'>
             <ul class="nav navbar-nav menu_nav ml-auto">
-              <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
               <li class="nav-item submenu dropdown">
                 <a href="{% url 'category' category='Men' %}" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                   aria-expanded="false">Men</a>
@@ -56,6 +55,16 @@
                 <ul class="dropdown-menu">
                   {% for kids_link in kids_links %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'category' category='Kids' label=kids_link %}">{{kids_link}}</a></li>
+                  {% endfor %}
+
+                </ul>
+              </li>
+               <li class="nav-item submenu dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                  aria-expanded="false">Cutsize</a>
+                <ul class="dropdown-menu">
+                  {% for size in sizes %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'cutsize' size=size %}">{{size}}</a></li>
                   {% endfor %}
 
                 </ul>

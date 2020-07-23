@@ -145,3 +145,13 @@ LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 STRIPE_SECRET_KEY = 'sk_test_8SOdjDCD0QJmzrT1dC77rNhO00RUbDsJAX'
 STRIPE_PUBLISHABLE_KEY = 'pk_test_oCAxK0CcUTHFsfOEu531pLYK00rYFcE5uu'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_FILE_PATH = os.path.join((BASE_DIR), "mails")
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'travellingdiaries2019@gmail.com'
+SERVER_EMAIL = 'travellingdiaries2019@gmail.com'
+DEFAULT_FROM_EMAIL = 'travellingdiaries2019@gmail.com'
+EMAIL_HOST_PASSWORD = 'Travel1234'
+EMAIL_USE_TLS = True

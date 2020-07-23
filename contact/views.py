@@ -5,6 +5,7 @@ from .models import Contact
 from items.models import Label,AccessaryLabel   
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from items.models import Size
 # Create your views here.
 
 
@@ -29,5 +30,7 @@ class ContactCreateView(CreateView):
         context['women_links'] = Label.objects.filter(categories__name='Women')
         context['kids_links'] = Label.objects.filter(categories__name='Kids')
         context['acc_labels']= AccessaryLabel.objects.all()
+        context["sizes"] = Size.objects.all()
+
         return context
 

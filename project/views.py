@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView, TemplateView
 from items.models import Colour, Item, Size, Label,AccessaryLabel
 import random
@@ -7,7 +7,11 @@ from orders.models import OrderItem, Order
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
-
+def get_or_none(classModel, **kwargs):
+    try:
+        return classModel.objects.get(**kwargs)
+    except classModel.DoesNotExist:
+        return None
 
 class HomeView(ListView):
     model = Item
@@ -34,13 +38,64 @@ class HomeView(ListView):
                 "discount_price":item.discount_price,
                 "image":item.image.url,
                 "get_absolute_url":item.get_absolute_url,
+                
             }
             item_objects.append(item_object)
         context['sales'] = item_objects
 
         context['acc_labels']= AccessaryLabel.objects.all()
+        context['sizes'] = Size.objects.all()
+
 
         return context
+
+class CutSize(ListView):
+    model = Item
+    # paginate_by = 10
+
+    def get(self, *arg, **kwargs):
+        label = ''
+        queryset = ''
+        try:
+            if kwargs['size']:
+                label = kwargs['size']
+                queryset = Item.objects.filter(sizes__name=label)
+        
+        except:
+            queryset = None
+
+        hot_sales = OrderItem.objects.values_list('item_id', flat=True).distinct()[:4]
+        item_objects=[]
+        for item_id in hot_sales:
+            item = Item.objects.get(id=item_id)
+            item_object = {
+                "title":item.title,
+                "price":item.price,
+                "discount_price":item.discount_price,
+                "image":item.image.url,
+                "get_absolute_url":item.get_absolute_url,
+            }
+            item_objects.append(item_object)
+
+        context = {
+            # 'category':category,
+            'colors' : Colour.objects.all(),
+            'sizes' : Size.objects.all(),
+            'acc_labels': AccessaryLabel.objects.all(),
+            'men_links' : Label.objects.filter(categories__name='Men'),
+            'women_links' : Label.objects.filter(categories__name='Women'),
+            'kids_links' : Label.objects.filter(categories__name='Kids'),
+            'sales': item_objects,
+            'object_list':queryset,
+            # 'size':get_or_none(Size ,name=size),
+            # 'color': get_or_none(Colour ,name=color),
+            'label': label,
+        }
+
+        return render(self.request, "cutsize.html", context)
+
+
+
 
 class ItemsCategoryView(ListView):
     model = Item
@@ -92,9 +147,9 @@ class ItemsCategoryView(ListView):
             'kids_links' : Label.objects.filter(categories__name='Kids'),
             'sales': item_objects,
             'object_list':queryset,
-            'size':size,
-            'color':color,
-            'label':label
+            'size':get_or_none(Size ,name=size),
+            'color': get_or_none(Colour ,name=color),
+            'label': label,
         }
 
         return render(self.request, "categories.html", context)
@@ -142,6 +197,12 @@ class AccCategoryView(ListView):
 
 class ContactView(TemplateView):
     template_name = "contact.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(ContactView, self).get_context_data(**kwargs)
+        context["sizes"] = Size.objects.all()
+        return context
+    
     
     
 class OrdersView(ListView,LoginRequiredMixin):
@@ -158,5 +219,7 @@ class OrdersView(ListView,LoginRequiredMixin):
         context['women_links'] = Label.objects.filter(categories__name='Women')
         context['kids_links'] = Label.objects.filter(categories__name='Kids')
         context['acc_labels']= AccessaryLabel.objects.all()
+        context["sizes"] =  Size.objects.all()
+
         return context
     

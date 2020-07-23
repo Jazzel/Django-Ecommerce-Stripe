@@ -17,12 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import HomeView,ItemsCategoryView,AccCategoryView,ContactView,OrdersView
+from .views import HomeView,CutSize, ItemsCategoryView,AccCategoryView,ContactView,OrdersView
 from contact.views import (ContactCreateView)
 
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
+    path('cutsize/<size>', CutSize.as_view(), name='cutsize'),
     path('contact/', ContactCreateView.as_view(), name='contact'),
     path('my-orders/', OrdersView.as_view(), name='my-orders'),
     path('search/<category>/<label>', ItemsCategoryView.as_view(), name='category'),

@@ -15,6 +15,7 @@ from accounts.models import UserProfile
 from .models import Payment
 from django.http import Http404
 from items.models import Label,AccessaryLabel   
+from django.core.mail import send_mail
 
 # Create your views here.
 
@@ -277,7 +278,7 @@ class PaymentView(View):
             payment.option = str(payment_option)
             payment.order = order
             payment.save()
-
+            
             # assign the payment to the order
 
             order_items = order.items.all()
@@ -289,6 +290,14 @@ class PaymentView(View):
             order.ordered = True
             order.ref_code = ref_code
             order.save()
+
+            send_mail(
+                'Checkout - All Classic Footwear Collections',
+                '{} - {} {} checked out his order with code "{}". \n Click this link to view more details. \n http://127.0.0.1:8000/admin/payments/payment/'.format(self.request.user,self.request.user.first_name,self.request.user.last_name ,ref_code),
+                'travellingdiaries2019@gmail.com', 
+                ['jazzelmehmood4@gmail.com'],
+                fail_silently=True,
+            )
 
             messages.success(self.request, "Your order was successful! Your order code is {}. Please note it down for your surety.".format(ref_code),)
 
